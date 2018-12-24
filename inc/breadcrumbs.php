@@ -790,12 +790,12 @@ class Breadcrumb_Trail {
 		$day   = sprintf( $this->labels['archive_day'],   get_the_time( esc_html_x( 'j', 'daily archives date format',   'breadcrumb-trail' ) ) );
 
 		// Add the year and month items.
-		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
-		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ), $month );
+		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( $this->get_the_time( 'Y' ) ) ), $year );
+		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( $this->get_the_time( 'Y' ), $this->get_the_time( 'm' ) ) ), $month );
 
 		// Add the day item.
 		if ( is_paged() )
-			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( get_the_time( 'Y' ) ), get_the_time( 'm' ), get_the_time( 'd' ) ), $day );
+			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( $this->get_the_time( 'Y' ) ), $this->get_the_time( 'm' ), $this->get_the_time( 'd' ) ), $day );
 
 		elseif ( true === $this->args['show_title'] )
 			$this->items[] = $day;
@@ -818,11 +818,11 @@ class Breadcrumb_Trail {
 		$week = sprintf( $this->labels['archive_week'],  get_the_time( esc_html_x( 'W', 'weekly archives date format', 'breadcrumb-trail' ) ) );
 
 		// Add the year item.
-		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
+		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( $this->get_the_time( 'Y' ) ) ), $year );
 
 		// Add the week item.
 		if ( is_paged() )
-			$this->items[] = esc_url( get_archives_link( add_query_arg( array( 'm' => get_the_time( 'Y' ), 'w' => get_the_time( 'W' ) ), home_url() ), $week, false ) );
+			$this->items[] = esc_url( get_archives_link( add_query_arg( array( 'm' => $this->get_the_time( 'Y' ), 'w' => $this->get_the_time( 'W' ) ), home_url() ), $week, false ) );
 
 		elseif ( true === $this->args['show_title'] )
 			$this->items[] = $week;
@@ -845,11 +845,11 @@ class Breadcrumb_Trail {
 		$month = sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'breadcrumb-trail' ) ) );
 
 		// Add the year item.
-		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
+		$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( $this->get_the_time( 'Y' ) ) ), $year );
 
 		// Add the month item.
 		if ( is_paged() )
-			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ), $month );
+			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( $this->get_the_time( 'Y' ), $this->get_the_time( 'm' ) ) ), $month );
 
 		elseif ( true === $this->args['show_title'] )
 			$this->items[] = $month;
@@ -872,7 +872,7 @@ class Breadcrumb_Trail {
 
 		// Add the year item.
 		if ( is_paged() )
-			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
+			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( $this->get_the_time( 'Y' ) ) ), $year );
 
 		elseif ( true === $this->args['show_title'] )
 			$this->items[] = $year;
@@ -1208,15 +1208,15 @@ class Breadcrumb_Trail {
 
 				// If using the %year% tag, add a link to the yearly archive.
 				if ( '%year%' == $tag )
-					$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y', $post_id ) ) ), sprintf( $this->labels['archive_year'], get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'breadcrumb-trail' ) ) ) );
+					$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( $this->get_the_time( 'Y', $post_id ) ) ), sprintf( $this->labels['archive_year'], get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'breadcrumb-trail' ) ) ) );
 
 				// If using the %monthnum% tag, add a link to the monthly archive.
 				elseif ( '%monthnum%' == $tag )
-					$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y', $post_id ), get_the_time( 'm', $post_id ) ) ), sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'breadcrumb-trail' ) ) ) );
+					$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( $this->get_the_time( 'Y', $post_id ), $this->get_the_time( 'm', $post_id ) ) ), sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'breadcrumb-trail' ) ) ) );
 
 				// If using the %day% tag, add a link to the daily archive.
 				elseif ( '%day%' == $tag )
-					$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( get_the_time( 'Y', $post_id ), get_the_time( 'm', $post_id ), get_the_time( 'd', $post_id ) ) ), sprintf( $this->labels['archive_day'], get_the_time( esc_html_x( 'j', 'daily archives date format', 'breadcrumb-trail' ) ) ) );
+					$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( $this->get_the_time( 'Y', $post_id ), $this->get_the_time( 'm', $post_id ), $this->get_the_time( 'd', $post_id ) ) ), sprintf( $this->labels['archive_day'], get_the_time( esc_html_x( 'j', 'daily archives date format', 'breadcrumb-trail' ) ) ) );
 
 				// If using the %author% tag, add a link to the post author archive.
 				elseif ( '%author%' == $tag )
@@ -1233,5 +1233,31 @@ class Breadcrumb_Trail {
 				}
 			}
 		}
+	}
+	/**
+	 * This function added to fix the calendar problem in primalink in some websites
+	 * that uses persian or arabic calendar.
+	 * It changes arabic and persian digits to its latin version.
+	 * It must be used when we use the time in url 
+	 *
+	 * @since  1.1.0
+	 * @access protected
+	 * @param string      $d    Optional. Format to use for retrieving the time the post
+	 *                          was written. Either 'G', 'U', or php date format defaults
+	 *                          to the value specified in the time_format option. Default empty.
+	 * @param int|WP_Post $post WP_Post object or ID. Default is global $post object.
+	 * @return string|int|false Formatted date string or Unix timestamp if `$id` is 'U' or 'G'. False on failure.
+	 */
+	protected function get_the_time( $d = '', $post = null ) {
+		$res = get_the_time($d, $post);
+		//
+		$persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+		$arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+		//
+		$num = range(0, 9);
+		$convertedPersianNums = str_replace($persian, $num, $res);
+		$englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+		//
+		return $englishNumbersOnly;
 	}
 }
